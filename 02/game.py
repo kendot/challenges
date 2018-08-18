@@ -9,22 +9,16 @@ NUM_LETTERS = 7
 
 
 def draw_letters():
-    start = len(POUCH)
     letters = []
     for count in range(0, 7):
         letter = random.choice(POUCH)
-        print('Letter: {}'.format(letter))
-        # Got a letter, need to remove from POUCH
+        # Got a letter, need to remove it from POUCH
         for x in POUCH:
             if letter == x:
-                print('Found Letter: {}'.format(x))
                 idx = POUCH.index(x)
                 del POUCH[idx]
                 break
         letters.append(random.choice(POUCH))
-    print(start)
-    print(len(POUCH))
-
     return letters
 
 
@@ -53,7 +47,9 @@ def max_word_value(words):
 
 
 def main():
-    print(draw_letters())
+    print("Letters drawn: {}".format(draw_letters()))
+    user_word = raw_input("Enter your word: ").upper()
+    print("Word chosen: {} (value: {})".format(user_word, calc_word_value(user_word)))
     # print(DICTIONARY)
 
 
