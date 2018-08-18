@@ -2,6 +2,7 @@
 # Code Challenge 02 - Word Values Part II - a simple game
 # http://pybit.es/codechallenge02.html
 
+import sys
 import random
 from data import DICTIONARY, LETTER_SCORES, POUCH
 
@@ -30,8 +31,11 @@ def _get_permutations_draw():
     pass
 
 
-def _validation():
-    pass
+def _validation(user_word, letters):
+    for letter in user_word:
+        if letter not in letters:
+            return False
+    return True
 
 
 # re-use from challenge 01
@@ -47,9 +51,18 @@ def max_word_value(words):
 
 
 def main():
-    print("Letters drawn: {}".format(draw_letters()))
+    # Draw 7 letters from POUCH
+    user_letters = draw_letters()
+    print("Letters drawn: {}".format(user_letters))
+
+    # Get user's word
     user_word = raw_input("Enter your word: ").upper()
+
+    # Verify user_word uses letters from draw
+    if not _validation(user_word, user_letters):
+        sys.exit("Your word uses letters you don't have")
     print("Word chosen: {} (value: {})".format(user_word, calc_word_value(user_word)))
+
     # print(DICTIONARY)
 
 
