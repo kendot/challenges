@@ -26,16 +26,15 @@ def draw_letters():
 
 def get_possible_dict_words(letters, user_word):
     allwords = []
-    print(letters)
     for item in xrange(0, len(letters)+1):
-        els = [list(words) for words in itertools.combinations(letters, item)]
+        els = [list(words) for words in itertools.permutations(letters, item)]
         allwords.extend(els)
 
     v = []
     for group in allwords:
         v.append(''.join(group).lower())
 
-    print(sorted(v))
+    # print(sorted(v))
 
     if user_word in v:
         print('!! FOUND USER WORD: {}'.format(user_word))
@@ -43,7 +42,7 @@ def get_possible_dict_words(letters, user_word):
         print('!! USER WORD NOT FOUND: {}'.format(user_word))
 
     res = (set(v).intersection(DICTIONARY))
-    print(sorted(res))
+   #  print(sorted(res))
     return res
 
 
