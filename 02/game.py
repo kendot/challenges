@@ -34,15 +34,7 @@ def get_possible_dict_words(letters, user_word):
     for group in allwords:
         v.append(''.join(group).lower())
 
-    # print(sorted(v))
-
-    if user_word in v:
-        print('!! FOUND USER WORD: {}'.format(user_word))
-    else:
-        print('!! USER WORD NOT FOUND: {}'.format(user_word))
-
     res = (set(v).intersection(DICTIONARY))
-   #  print(sorted(res))
     return res
 
 
@@ -108,7 +100,9 @@ def main():
 
 
 if __name__ == "__main__":
-    play = True
-    while play:
+    play = 'y'
+    while play == 'y':
         main()
-        play = raw_input("Play again? (Y/N): ")
+        play = raw_input("Play again? (Y/N): ").lower()
+    else:
+        sys.exit("Thanks for playing")
