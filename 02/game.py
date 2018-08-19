@@ -14,7 +14,7 @@ def draw_letters():
     letters = []
     for count in range(0, 7):
         letter = random.choice(POUCH)
-        # Got a letter, need to remove it from POUCH
+        # Got a letter, need to remove it from POUCH so same letter is not drawn 2x
         for x in POUCH:
             if letter == x:
                 idx = POUCH.index(x)
@@ -24,25 +24,31 @@ def draw_letters():
     return letters
 
 
-def get_possible_dict_words(letters, user_word):
+def get_possible_dict_words(letters):
     allwords = []
+
+    # This loop returns a list of all the possible permutations of drawn letters
     for item in xrange(0, len(letters)+1):
         els = [list(words) for words in itertools.permutations(letters, item)]
         allwords.extend(els)
 
-    v = []
+    # This loop iterates through all words, makes them lower case and adds to list
+    lower_words = []
     for group in allwords:
-        v.append(''.join(group).lower())
+        lower_words.append(''.join(group).lower())
 
-    res = (set(v).intersection(DICTIONARY))
+    # Finds the words common to both lists
+    res = (set(lower_words).intersection(DICTIONARY))
     return res
 
 
 def _get_permutations_draw(letters):
+    # I believe this only gets permutations of all letters, a better word could exit with fewer letters
     return itertools.permutations(letters)
 
 
 def _validation(user_word, letters):
+    # Converts user_word to lower case then verifies word only contains letters from letters drawn
     for letter in user_word.lower():
         if letter.upper() not in letters:
             return False
@@ -86,7 +92,7 @@ def main():
     print("Word chosen: {} (value: {})".format(user_word, user_word_score))
 
     # Get highest value word from letters drawn
-    possible_words = get_possible_dict_words(user_letters, user_word)
+    possible_words = get_possible_dict_words(user_letters)
     best_word = max_word_value(possible_words)
     best_word_score = calc_word_value(best_word)
 
