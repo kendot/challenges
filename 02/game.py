@@ -108,5 +108,7 @@ def main():
 
 
 if __name__ == "__main__":
-    while True:
+    play = True
+    while play:
         main()
+        play = raw_input("Play again? (Y/N): ")
