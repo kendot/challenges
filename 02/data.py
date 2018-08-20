@@ -2,9 +2,11 @@ from collections import namedtuple
 
 Letter = namedtuple('Letter', 'name amount value')
 
+
 def _load_words():
     with open('dictionary.txt') as f:
         return set([word.strip().lower() for word in f.read().split()])
+
 
 DICTIONARY = _load_words()
 assert len(DICTIONARY) == 234371
@@ -15,8 +17,8 @@ distribution = [Letter(name='A', amount='9', value='1'), Letter(name='B', amount
 
 POUCH = list(''.join(
         list(letter.name * int(letter.amount) 
-            for letter in distribution))
-    )
+             for letter in distribution))
+             )
 assert len(POUCH) == 98  # no wildcards in this simple game
 
 
