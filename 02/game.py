@@ -25,26 +25,23 @@ def draw_letters():
 
 
 def get_possible_dict_words(letters):
-    allwords = []
-
-    # This loop returns a list of all the possible permutations of drawn letters
-    for item in xrange(0, len(letters)+1):
-        els = [list(words) for words in itertools.permutations(letters, item)]
-        allwords.extend(els)
-
-    # This loop iterates through all words, makes them lower case and adds to list
+    # Iterate through all words from drawn letters then make lower case and add to list
     lower_words = []
-    for group in allwords:
+    for group in _get_permutations_draw(letters):
         lower_words.append(''.join(group).lower())
 
-    # Finds the words common to both lists
+    # Find the words common to both lists
     res = (set(lower_words).intersection(DICTIONARY))
     return res
 
 
 def _get_permutations_draw(letters):
-    # I believe this only gets permutations of all letters, a better word could exit with fewer letters
-    return itertools.permutations(letters)
+    all_words = []
+    # This loop returns a list of all the possible permutations of drawn letters
+    for item in xrange(0, len(letters)+1):
+        els = [list(words) for words in itertools.permutations(letters, item)]
+        all_words.extend(els)
+    return all_words
 
 
 def _validation(user_word, letters):
