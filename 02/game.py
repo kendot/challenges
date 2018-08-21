@@ -21,7 +21,23 @@ def draw_letters():
                 del POUCH[idx]
                 break
         letters.append(random.choice(POUCH))
+
+    # Check if drawn letters are only vowels, redraw if so
+    if _all_vowels(letters):
+        print('Only vowels, repicking...')
+        draw_letters()
     return letters
+
+
+def _all_vowels(letters):
+    all_vowels = {}
+    for idx in range(len(letters)):
+        if letters[idx] in 'AEIOU':
+            all_vowels[idx] = True
+        else:
+            all_vowels[idx] = False
+
+    return False if False in all_vowels.values() else True
 
 
 def get_possible_dict_words(letters):
@@ -38,7 +54,7 @@ def get_possible_dict_words(letters):
 def _get_permutations_draw(letters):
     all_words = []
     # This loop returns a list of all the possible permutations of drawn letters
-    for item in xrange(0, len(letters)+1):
+    for item in range(0, len(letters)+1):
         els = [list(words) for words in itertools.permutations(letters, item)]
         all_words.extend(els)
     return all_words
@@ -66,7 +82,7 @@ def max_word_value(words):
 
 
 def get_user_input():
-    return raw_input("Enter your word: ")
+    return input("Enter your word: ")
 
 
 def main():
@@ -76,7 +92,7 @@ def main():
     print("Letters drawn: {}".format(' '.join(user_letters)))
 
     # Get user's word
-    user_word = raw_input("Enter your word: ").lower()
+    user_word = input("Enter your word: ").lower()
 
     while user_word not in DICTIONARY:
         print('word is invalid')
@@ -106,6 +122,6 @@ if __name__ == "__main__":
     play = 'y'
     while play == 'y':
         main()
-        play = raw_input("Play again? (Y/N): ").lower()
+        play = input("Play again? (Y/N): ").lower()
     else:
         sys.exit("Thanks for playing")
