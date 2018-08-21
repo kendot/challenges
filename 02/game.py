@@ -12,7 +12,7 @@ NUM_LETTERS = 7
 
 def draw_letters():
     letters = []
-    for count in range(0, 7):
+    for count in range(1, 8):
         letter = random.choice(POUCH)
         # Got a letter, need to remove it from POUCH so same letter is not drawn 2x
         for x in POUCH:
@@ -26,6 +26,7 @@ def draw_letters():
     if _all_vowels(letters):
         print('Only vowels, repicking...')
         draw_letters()
+    print("Letters drawn: {}".format(' '.join(letters)))
     return letters
 
 
@@ -36,7 +37,6 @@ def _all_vowels(letters):
             all_vowels[idx] = True
         else:
             all_vowels[idx] = False
-
     return False if False in all_vowels.values() else True
 
 
@@ -54,7 +54,7 @@ def get_possible_dict_words(letters):
 def _get_permutations_draw(letters):
     all_words = []
     # This loop returns a list of all the possible permutations of drawn letters
-    for item in range(0, len(letters)+1):
+    for item in range(1, len(letters)+1):
         els = [list(words) for words in itertools.permutations(letters, item)]
         all_words.extend(els)
     return all_words
@@ -62,9 +62,11 @@ def _get_permutations_draw(letters):
 
 def _validation(user_word, letters):
     # Converts user_word to lower case then verifies word only contains letters from letters drawn
-    for letter in user_word.lower():
+    for letter in user_word:
         if letter.upper() not in letters:
-            return False
+            raise ValueError
+    if user_word not in get_possible_dict_words(letters):
+            raise ValueError
     return True
 
 
@@ -89,18 +91,17 @@ def main():
     # Draw 7 letters from POUCH
     print("-"*10)
     user_letters = draw_letters()
-    print("Letters drawn: {}".format(' '.join(user_letters)))
 
     # Get user's word
-    user_word = input("Enter your word: ").lower()
-
-    while user_word not in DICTIONARY:
-        print('word is invalid')
-        user_word = get_user_input()
+    user_word = get_user_input()
 
     # Verify user_word uses letters from draw
-    if not _validation(user_word, user_letters):
-        sys.exit("Your word uses letters you don't have")
+    try:
+        _validation(user_word, user_letters)
+    except ValueError:
+        print("Your word uses letters you don't have")
+        user_word = get_user_input()
+
     user_word_score = calc_word_value(user_word)
     print("Word chosen: {} (value: {})".format(user_word, user_word_score))
 
