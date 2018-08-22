@@ -60,11 +60,15 @@ def _get_permutations_draw(letters):
     return all_words
 
 
-def _validation(user_word, letters):
+def _letter_validation(user_word, letters):
     # Converts user_word to lower case then verifies word only contains letters from letters drawn
     for letter in user_word:
         if letter.upper() not in letters:
             raise ValueError
+    return True
+
+
+def _validation(user_word, letters):
     if user_word not in get_possible_dict_words(letters):
             raise ValueError
     return True
